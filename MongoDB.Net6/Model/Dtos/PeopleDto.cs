@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 
 namespace MongoDB.Net6.Model.Dtos
 {
@@ -12,5 +12,7 @@ namespace MongoDB.Net6.Model.Dtos
         public string Name { get; set; }
         [JsonProperty("age")]
         public int Age { get; set; }
+        [JsonProperty("birthDate")]
+        public DateTime? BirthDate { get; set; }
     }
 }
