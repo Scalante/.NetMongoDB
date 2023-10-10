@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace MongoDB.Net6.Model.Dtos
 {

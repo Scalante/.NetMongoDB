@@ -34,6 +34,17 @@ namespace MongoDB.Net6
 
             services.AddTransient<ICrudMongoDB, CrudMongoDB>();
 
+            services.AddControllers()
+             .AddNewtonsoftJson(options =>
+             {
+                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                 options.SerializerSettings.DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.Ignore;
+                 options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                 options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
+                 options.SerializerSettings.DateFormatString = "dd/MM/yyyy HH:mm:ss";
+                 options.SerializerSettings.FloatParseHandling = Newtonsoft.Json.FloatParseHandling.Double;
+             });
+
             services.AddMvc().AddViewLocalization();
             services.AddLocalization(options => options.ResourcesPath = "");
 

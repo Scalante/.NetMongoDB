@@ -35,7 +35,8 @@ namespace MongoDB.Net6.Core
                 var people = new People()
                 {
                     Name = peopleDto.Name,
-                    Age = peopleDto.Age
+                    Age = peopleDto.Age,
+                    BirthDate = peopleDto.BirthDate
                 };
 
                 peopleDB.InsertOne(people);
@@ -64,7 +65,8 @@ namespace MongoDB.Net6.Core
                 {
                     Id = peopleDto.Id!,
                     Name = peopleDto.Name,
-                    Age = peopleDto.Age
+                    Age = peopleDto.Age,
+                    BirthDate = peopleDto.BirthDate
                 };
 
                 peopleDB.ReplaceOne(u => u.Id == people.Id, people);

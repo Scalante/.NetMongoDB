@@ -14,6 +14,6 @@ namespace MongoDB.Net6.Model.Entities
         public int Age { get; set; }
         [BsonElement("birthDate")]
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
     }
 }
