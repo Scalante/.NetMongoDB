@@ -39,7 +39,7 @@ namespace MongoDB.Net6.Core
                     BirthDate = peopleDto.BirthDate
                 };
 
-                studentCollection.InsertOne(people);
+                studentCollection.InsertOneAsync(people);
                 return Task.FromResult(true);
             }
             catch (Exception)
@@ -69,7 +69,7 @@ namespace MongoDB.Net6.Core
                     BirthDate = peopleDto.BirthDate
                 };
 
-                studentCollection.ReplaceOne(u => u.Id == people.Id, people);
+                studentCollection.ReplaceOneAsync(u => u.Id == people.Id, people);
                 return Task.FromResult(true);
             }
             catch (Exception)
@@ -90,7 +90,7 @@ namespace MongoDB.Net6.Core
                 var database = _mongoClient.GetDatabase(Database);
                 var studentCollection = database.GetCollection<Student>(Collection);
 
-                studentCollection.DeleteOne(d => d.Id == id);
+                studentCollection.DeleteOneAsync(d => d.Id == id);
                 return Task.FromResult(true);
             }
             catch (Exception)
