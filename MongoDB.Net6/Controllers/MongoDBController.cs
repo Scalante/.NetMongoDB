@@ -24,7 +24,7 @@ namespace MongoDB.Net6.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Insert([FromBody] PeopleDto peopleDto)
+        public async Task<IActionResult> Insert([FromBody] StudentDto peopleDto)
         {
             var response = await _crudMongoDB.Insert(peopleDto);
 
@@ -37,7 +37,7 @@ namespace MongoDB.Net6.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] PeopleDto peopleDto)
+        public async Task<IActionResult> Update([FromBody] StudentDto peopleDto)
         {
             var response = await _crudMongoDB.Update(peopleDto);
 

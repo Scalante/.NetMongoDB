@@ -5,9 +5,9 @@ namespace MongoDB.Net6.Core
 {
     public interface ICrudMongoDB
     {
-        Task<List<People>> List();
-        Task<bool> Insert(PeopleDto peopleDto);
-        Task<bool> Update(PeopleDto peopleDto);
+        Task<List<Student>> List();
+        Task<bool> Insert(StudentDto peopleDto);
+        Task<bool> Update(StudentDto peopleDto);
         Task<bool> Delete(string id);
     }
 }

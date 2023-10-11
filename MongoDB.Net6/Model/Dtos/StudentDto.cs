@@ -2,7 +2,7 @@
 
 namespace MongoDB.Net6.Model.Dtos
 {
-    public class PeopleDto
+    public class StudentDto
     {
         [JsonProperty("id")]
         public string? Id { get; set; }

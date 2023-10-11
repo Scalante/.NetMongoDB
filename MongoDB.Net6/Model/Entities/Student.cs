@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace MongoDB.Net6.Model.Entities
 {
-    public class People
+    public class Student
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

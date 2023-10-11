@@ -8,38 +8,38 @@ namespace MongoDB.Net6.Core
     {
         private readonly IMongoClient _mongoClient;
         public const string Database = "school";
-        public const string Collection = "people";
+        public const string Collection = "student";
 
         public CrudMongoDB(IMongoClient mongoClient)
         {
             _mongoClient = mongoClient;
         }
 
-        public Task<List<People>> List()
+        public Task<List<Student>> List()
         {
             var database = _mongoClient.GetDatabase(Database);
-            var peopleDB = database.GetCollection<People>(Collection);
+            var studentCollection = database.GetCollection<Student>(Collection);
 
-            Task<List<People>> listPeople = peopleDB.Find(d => true).ToListAsync();
+            Task<List<Student>> listPeople = studentCollection.Find(d => true).ToListAsync();
 
             return listPeople;
         }
 
-        public Task<bool> Insert(PeopleDto peopleDto)
+        public Task<bool> Insert(StudentDto peopleDto)
         {
             try
             {
                 var database = _mongoClient.GetDatabase(Database);
-                var peopleDB = database.GetCollection<People>(Collection);
+                var studentCollection = database.GetCollection<Student>(Collection);
 
-                var people = new People()
+                var people = new Student()
                 {
                     Name = peopleDto.Name,
                     Age = peopleDto.Age,
                     BirthDate = peopleDto.BirthDate
                 };
 
-                peopleDB.InsertOne(people);
+                studentCollection.InsertOne(people);
                 return Task.FromResult(true);
             }
             catch (Exception)
@@ -49,7 +49,7 @@ namespace MongoDB.Net6.Core
         }
 
 
-        public Task<bool> Update(PeopleDto peopleDto)
+        public Task<bool> Update(StudentDto peopleDto)
         {
             try
             {
@@ -59,9 +59,9 @@ namespace MongoDB.Net6.Core
                 }
 
                 var database = _mongoClient.GetDatabase(Database);
-                var peopleDB = database.GetCollection<People>(Collection);
+                var studentCollection = database.GetCollection<Student>(Collection);
 
-                var people = new People()
+                var people = new Student()
                 {
                     Id = peopleDto.Id!,
                     Name = peopleDto.Name,
@@ -69,7 +69,7 @@ namespace MongoDB.Net6.Core
                     BirthDate = peopleDto.BirthDate
                 };
 
-                peopleDB.ReplaceOne(u => u.Id == people.Id, people);
+                studentCollection.ReplaceOne(u => u.Id == people.Id, people);
                 return Task.FromResult(true);
             }
             catch (Exception)
@@ -88,9 +88,9 @@ namespace MongoDB.Net6.Core
                 }
 
                 var database = _mongoClient.GetDatabase(Database);
-                var peopleDB = database.GetCollection<People>(Collection);
+                var studentCollection = database.GetCollection<Student>(Collection);
 
-                peopleDB.DeleteOne(d => d.Id == id);
+                studentCollection.DeleteOne(d => d.Id == id);
                 return Task.FromResult(true);
             }
             catch (Exception)
