@@ -20,26 +20,26 @@ namespace MongoDB.Net6.Core
             var database = _mongoClient.GetDatabase(Database);
             var studentCollection = database.GetCollection<Student>(Collection);
 
-            Task<List<Student>> listPeople = studentCollection.Find(d => true).ToListAsync();
+            Task<List<Student>> listStudent = studentCollection.Find(d => true).ToListAsync();
 
-            return listPeople;
+            return listStudent;
         }
 
-        public Task<bool> Insert(StudentDto peopleDto)
+        public Task<bool> Insert(StudentDto studenDto)
         {
             try
             {
                 var database = _mongoClient.GetDatabase(Database);
                 var studentCollection = database.GetCollection<Student>(Collection);
 
-                var people = new Student()
+                var student = new Student()
                 {
-                    Name = peopleDto.Name,
-                    Age = peopleDto.Age,
-                    BirthDate = peopleDto.BirthDate
+                    Name = studenDto.Name,
+                    Age = studenDto.Age,
+                    BirthDate = studenDto.BirthDate
                 };
 
-                studentCollection.InsertOneAsync(people);
+                studentCollection.InsertOneAsync(student);
                 return Task.FromResult(true);
             }
             catch (Exception)
@@ -49,11 +49,11 @@ namespace MongoDB.Net6.Core
         }
 
 
-        public Task<bool> Update(StudentDto peopleDto)
+        public Task<bool> Update(StudentDto studenDto)
         {
             try
             {
-                if (string.IsNullOrEmpty(peopleDto.Id))
+                if (string.IsNullOrEmpty(studenDto.Id))
                 {
                     return Task.FromResult(false);
                 }
@@ -63,10 +63,10 @@ namespace MongoDB.Net6.Core
 
                 var people = new Student()
                 {
-                    Id = peopleDto.Id!,
-                    Name = peopleDto.Name,
-                    Age = peopleDto.Age,
-                    BirthDate = peopleDto.BirthDate
+                    Id = studenDto.Id!,
+                    Name = studenDto.Name,
+                    Age = studenDto.Age,
+                    BirthDate = studenDto.BirthDate
                 };
 
                 studentCollection.ReplaceOneAsync(u => u.Id == people.Id, people);
