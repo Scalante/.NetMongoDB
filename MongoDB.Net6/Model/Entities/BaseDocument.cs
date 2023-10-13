@@ -18,6 +18,6 @@ namespace MongoDB.Net6.Model.Entities
         [BsonElement("createDate")]
         public DateTime CreateDate { get; set; }
         [BsonElement("createBy")]
-        public string? CreateBy { get; set; } = "Scalante";
+        public string CreateBy { get; set; } = "Scalante";
     }
 }

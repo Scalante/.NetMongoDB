@@ -30,10 +30,10 @@ namespace MongoDB.Net6.Controllers
 
             if (response)
             {
-                return Ok("Bien");
+                return StatusCode(200, "Inserción realizada correctamente");
             }
 
-            return BadRequest("Error");
+            return StatusCode(500, "Error Interno");
         }
 
         [HttpPut]
@@ -61,8 +61,5 @@ namespace MongoDB.Net6.Controllers
 
             return StatusCode(500, "Error Interno");
         }
-
-
-        
     }
 }

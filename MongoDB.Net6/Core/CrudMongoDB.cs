@@ -3,7 +3,7 @@ using MongoDB.Net6.Model.Entities;
 
 namespace MongoDB.Net6.Core
 {
-    public partial class CrudMongoDB<TDocument> : ICrudMongoDB<TDocument> where TDocument : BaseDocument
+    public class CrudMongoDB<TDocument> : ICrudMongoDB<TDocument> where TDocument : BaseDocument
     {
         private readonly IMongoClient _mongoClient;
         public const string Database = "school";
@@ -27,7 +27,7 @@ namespace MongoDB.Net6.Core
             catch (Exception)
             {
                 return Enumerable.Empty<TDocument>().AsQueryable();
-            } 
+            }
         }
 
         public async Task<bool> InsertAsync(TDocument model)

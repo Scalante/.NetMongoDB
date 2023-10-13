@@ -9,5 +9,8 @@ namespace MongoDB.Net6.Model.Entities
         public string? Name { get; set; }
         [BsonElement("age")]
         public int Age { get; set; }
+        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+        [BsonElement("birthDate")]
+        public DateTime BirthDate { get; set; }
     }
 }

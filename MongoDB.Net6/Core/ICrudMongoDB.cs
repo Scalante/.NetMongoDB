@@ -1,6 +1,6 @@
 ﻿namespace MongoDB.Net6.Core
 {
-    public partial interface ICrudMongoDB<TDocument>
+    public interface ICrudMongoDB<TDocument>
     {
         Task<IQueryable<TDocument>> ListAsync();
         Task<bool> InsertAsync(TDocument model);
