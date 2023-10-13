@@ -1,10 +1,9 @@
 ﻿using MongoDB.Driver;
-using MongoDB.Net6.Model.Dtos;
 using MongoDB.Net6.Model.Entities;
 
 namespace MongoDB.Net6.Core
 {
-    public class CrudMongoDB : ICrudMongoDB
+    public partial class CrudMongoDB<TDocument> : ICrudMongoDB<TDocument> where TDocument : BaseDocument
     {
         private readonly IMongoClient _mongoClient;
         public const string Database = "school";
@@ -15,87 +14,70 @@ namespace MongoDB.Net6.Core
             _mongoClient = mongoClient;
         }
 
-        public Task<List<Student>> List()
-        {
-            var database = _mongoClient.GetDatabase(Database);
-            var studentCollection = database.GetCollection<Student>(Collection);
-
-            Task<List<Student>> listStudent = studentCollection.Find(d => true).ToListAsync();
-
-            return listStudent;
-        }
-
-        public Task<bool> Insert(StudentDto studenDto)
+        public async Task<IQueryable<TDocument>> ListAsync()
         {
             try
             {
                 var database = _mongoClient.GetDatabase(Database);
-                var studentCollection = database.GetCollection<Student>(Collection);
+                var collection = database.GetCollection<TDocument>(Collection);
+                var queryable = collection.AsQueryable();
 
-                var student = new Student()
-                {
-                    Name = studenDto.Name,
-                    Age = studenDto.Age,
-                    BirthDate = studenDto.BirthDate
-                };
-
-                studentCollection.InsertOneAsync(student);
-                return Task.FromResult(true);
+                return await Task.FromResult(queryable);
             }
             catch (Exception)
             {
-                return Task.FromResult(false);
-            }
+                return Enumerable.Empty<TDocument>().AsQueryable();
+            } 
         }
 
-
-        public Task<bool> Update(StudentDto studenDto)
+        public async Task<bool> InsertAsync(TDocument model)
         {
             try
             {
-                if (string.IsNullOrEmpty(studenDto.Id))
-                {
-                    return Task.FromResult(false);
-                }
-
                 var database = _mongoClient.GetDatabase(Database);
-                var studentCollection = database.GetCollection<Student>(Collection);
-
-                var people = new Student()
-                {
-                    Id = studenDto.Id!,
-                    Name = studenDto.Name,
-                    Age = studenDto.Age,
-                    BirthDate = studenDto.BirthDate
-                };
-
-                studentCollection.ReplaceOneAsync(u => u.Id == people.Id, people);
-                return Task.FromResult(true);
+                var collection = database.GetCollection<TDocument>(Collection);
+                await collection.InsertOneAsync(model);
+                return true;
             }
             catch (Exception)
             {
-                return Task.FromResult(false);
+                return false;
             }
         }
 
-        public Task<bool> Delete(string id)
+        public async Task<bool> UpdateAsync(TDocument model)
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
-                {
-                    return Task.FromResult(false);
-                }
-
                 var database = _mongoClient.GetDatabase(Database);
-                var studentCollection = database.GetCollection<Student>(Collection);
+                var collection = database.GetCollection<TDocument>(Collection);
 
-                studentCollection.DeleteOneAsync(d => d.Id == id);
-                return Task.FromResult(true);
+                var filter = Builders<TDocument>.Filter.Eq(x => x.Id, model.Id);
+                await collection.ReplaceOneAsync(filter, model);
+
+                return true;
             }
             catch (Exception)
             {
-                return Task.FromResult(false);
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteAsync(string id)
+        {
+            try
+            {
+                var database = _mongoClient.GetDatabase(Database);
+                var collection = database.GetCollection<TDocument>(Collection);
+
+                var filter = Builders<TDocument>.Filter.Eq(x => x.Id, id);
+                await collection.DeleteOneAsync(filter);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
     }

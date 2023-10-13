@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace MongoDB.Net6.Model.Dtos
+﻿namespace MongoDB.Net6.Model.Dtos
 {
     public class StudentDto
     {

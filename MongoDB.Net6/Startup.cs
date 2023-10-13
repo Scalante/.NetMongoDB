@@ -32,7 +32,7 @@ namespace MongoDB.Net6
             // Registra el MongoClient en el contenedor de dependencias para su posterior uso
             services.AddSingleton<IMongoClient>(client);
 
-            services.AddTransient<ICrudMongoDB, CrudMongoDB>();
+            services.AddTransient(typeof(ICrudMongoDB<>), typeof(CrudMongoDB<>));
 
             services.AddControllers()
              .AddNewtonsoftJson(options =>

@@ -1,13 +1,10 @@
-﻿using MongoDB.Net6.Model.Dtos;
-using MongoDB.Net6.Model.Entities;
-
-namespace MongoDB.Net6.Core
+﻿namespace MongoDB.Net6.Core
 {
-    public interface ICrudMongoDB
+    public partial interface ICrudMongoDB<TDocument>
     {
-        Task<List<Student>> List();
-        Task<bool> Insert(StudentDto peopleDto);
-        Task<bool> Update(StudentDto peopleDto);
-        Task<bool> Delete(string id);
+        Task<IQueryable<TDocument>> ListAsync();
+        Task<bool> InsertAsync(TDocument model);
+        Task<bool> UpdateAsync(TDocument model);
+        Task<bool> DeleteAsync(string id);
     }
 }
