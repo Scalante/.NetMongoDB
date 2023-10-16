@@ -20,6 +20,11 @@ namespace MongoDB.Net6.Controllers
         {
             var response = await _crudMongoDB.ListAsync();
 
+            if (response.Count() == 0)
+            {
+                return StatusCode(404, "Sin resultados");
+            }
+
             return StatusCode(200, response);
         }
 
